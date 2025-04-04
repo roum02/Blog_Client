@@ -14,14 +14,16 @@ export default function NavWrapper({
   return (
     <>
       <TopNav onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
-      <SideNav isOpen={isSidebarOpen} />
-      <main
-        className={`pt-14 transition-all duration-300 ${
-          isSidebarOpen ? "ml-48" : ""
-        }`}
-      >
-        {children}
-      </main>
+      <SideNav isOpen={isSidebarOpen} isAdmin={true} />
+
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-[rgba(0,0,0,0.6)] z-40"
+        />
+      )}
+
+      <main className={`pt-14 transition-all duration-300 `}>{children}</main>
     </>
   );
 }
