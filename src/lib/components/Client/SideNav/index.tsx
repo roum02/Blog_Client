@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   FiHome,
   FiUser,
@@ -13,10 +15,22 @@ import {
 type SideNavProps = {
   isOpen: boolean;
   isAdmin: boolean;
+  onRouteChange?: () => void;
 };
 
-export default function SideNav({ isOpen, isAdmin }: SideNavProps) {
+export default function SideNav({
+  isOpen,
+  isAdmin,
+  onRouteChange,
+}: SideNavProps) {
+  const pathname = usePathname();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+  useEffect(() => {
+    if (onRouteChange) {
+      onRouteChange();
+    }
+  }, [pathname]);
 
   return (
     <aside
@@ -25,9 +39,14 @@ export default function SideNav({ isOpen, isAdmin }: SideNavProps) {
     `}
     >
       <ul className="space-y-3 text-gray-800 text-sm">
-        <li className="flex items-center gap-2 cursor-pointer hover:text-black">
-          <FiUser />
-          About
+        <li>
+          <Link
+            href="/about"
+            className="flex items-center gap-2 cursor-pointer hover:text-black"
+          >
+            <FiUser />
+            About
+          </Link>
         </li>
 
         {isAdmin && (

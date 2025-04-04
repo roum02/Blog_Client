@@ -14,7 +14,11 @@ export default function NavWrapper({
   return (
     <>
       <TopNav onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
-      <SideNav isOpen={isSidebarOpen} isAdmin={true} />
+      <SideNav
+        isOpen={isSidebarOpen}
+        isAdmin={true}
+        onRouteChange={() => setIsSidebarOpen(false)}
+      />
 
       {isSidebarOpen && (
         <div
