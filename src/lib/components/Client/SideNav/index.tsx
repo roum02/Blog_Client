@@ -41,6 +41,15 @@ export default function SideNav({
       <ul className="space-y-3 text-gray-800 text-sm">
         <li>
           <Link
+            href="/"
+            className="flex items-center gap-2 cursor-pointer hover:text-black"
+          >
+            <FiHome />
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
             href="/about"
             className="flex items-center gap-2 cursor-pointer hover:text-black"
           >
@@ -50,16 +59,16 @@ export default function SideNav({
         </li>
 
         {isAdmin && (
-          <li className="flex items-center gap-2 cursor-pointer hover:text-black">
-            <FiEdit />
-            Register
+          <li>
+            <Link
+              href="/register"
+              className="flex items-center gap-2 cursor-pointer hover:text-black"
+            >
+              <FiEdit />
+              Register
+            </Link>
           </li>
         )}
-
-        <li className="flex items-center gap-2 cursor-pointer hover:text-black">
-          <FiHome />
-          Home
-        </li>
 
         <li>
           <div
