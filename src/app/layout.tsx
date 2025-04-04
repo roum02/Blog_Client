@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SideNav, TopNav, NavWrapper } from "@blog-client-components";
 
 export const metadata: Metadata = {
   title: "Blog client",
@@ -13,9 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <nav>navigation</nav>
-        {children}
+      <body className="m-0 bg-white">
+        <NavWrapper>
+          <main className={`pt-4 transition-all duration-300`}>{children}</main>
+        </NavWrapper>
       </body>
     </html>
   );
