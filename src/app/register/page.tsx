@@ -22,6 +22,28 @@ export default function RegisterPage() {
 
         <div>
           <label
+            htmlFor="category"
+            className="block text-sm font-medium text-gray-700"
+          >
+            카테고리
+          </label>
+          <select
+            id="category"
+            name="category"
+            // value={category}
+            // onChange={(e) => setCategory(e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">카테고리를 선택하세요</option>
+            <option value="typescript">TypeScript</option>
+            <option value="nextjs">Next.js</option>
+            <option value="backend">백엔드</option>
+            <option value="infra">인프라</option>
+          </select>
+        </div>
+
+        <div>
+          <label
             htmlFor="content"
             className="block text-sm font-medium text-gray-700"
           >
