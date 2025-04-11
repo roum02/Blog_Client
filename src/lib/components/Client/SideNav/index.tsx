@@ -16,12 +16,16 @@ type SideNavProps = {
   isOpen: boolean;
   isAdmin: boolean;
   onRouteChange?: () => void;
+  profileImage?: string;
+  nickname?: string;
 };
 
 export default function SideNav({
   isOpen,
   isAdmin,
   onRouteChange,
+  profileImage = "https://item.kakaocdn.net/do/f54d975d70c2916c5705a0919f193a547154249a3890514a43687a85e6b6cc82",
+  nickname = "Guest",
 }: SideNavProps) {
   const pathname = usePathname();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -38,6 +42,8 @@ export default function SideNav({
       ${isOpen ? "translate-x-0" : "-translate-x-full"}
     `}
     >
+      <ProfileContent profileImage={profileImage} nickname={nickname} />
+
       <ul className="space-y-3 text-gray-800 text-sm">
         <li>
           <Link
@@ -107,3 +113,22 @@ export default function SideNav({
     </aside>
   );
 }
+
+const ProfileContent = ({
+  profileImage,
+  nickname,
+}: {
+  profileImage?: string;
+  nickname?: string;
+}) => {
+  return (
+    <div className="flex items-center gap-3 mb-6 px-2">
+      <img
+        src={profileImage}
+        alt="Profile"
+        className="w-10 h-10 rounded-full object-cover border"
+      />
+      <div className="text-sm font-medium text-gray-800">{nickname}</div>
+    </div>
+  );
+};
