@@ -11,18 +11,21 @@ const FroalaEditor = dynamic(() => import("react-froala-wysiwyg"), {
   ssr: false,
 });
 
-export default function Textarea() {
-  const [content, setContent] = useState("");
+interface TextareaProps {
+  value: string;
+  onChange: (val: string) => void;
+}
 
+export default function Textarea({ value, onChange }: TextareaProps) {
   const handleModelChange = (newContent: string) => {
-    setContent(newContent); // 사용자가 입력한 HTML 저장
+    onChange(newContent); // 사용자가 입력한 HTML 저장
   };
 
   return (
     <>
       <FroalaEditor
-        model={content}
-        onModelChange={setContent}
+        model={value}
+        onModelChange={handleModelChange}
         config={{
           placeholderText: "Write something amazing...",
         }}

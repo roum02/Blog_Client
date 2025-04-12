@@ -1,5 +1,5 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { getPosts, getPost, Post } from "./api";
+import { useQuery, UseQueryOptions, useMutation } from "@tanstack/react-query";
+import { getPosts, getPost, Post, CreatePostPayload, createPost } from "./api";
 
 export const POSTS_QUERY_KEY = ["POSTS"] as const;
 
@@ -28,5 +28,11 @@ export const usePost = (
     queryFn: () => getPost(id),
     enabled: !!id,
     ...options,
+  });
+};
+
+export const useCreatePost = () => {
+  return useMutation({
+    mutationFn: (payload: CreatePostPayload) => createPost(payload),
   });
 };

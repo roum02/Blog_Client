@@ -16,9 +16,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
   const params = await searchParams;
   const category = (params.category ?? "All") as CategoryKey;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`);
 
   if (!res.ok) {
     return notFound();
