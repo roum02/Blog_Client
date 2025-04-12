@@ -1,4 +1,13 @@
-export default async function PostsPage() {
+import Link from "next/link";
+
+interface PostsPageProps {
+  searchParams: Promise<{ category?: string }>;
+}
+
+export default async function PostsPage({ searchParams }: PostsPageProps) {
+  const params = await searchParams;
+  const category = params.category ?? "all";
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, {
     next: { revalidate: 60 },
   });
@@ -15,12 +24,12 @@ export default async function PostsPage() {
       <ul className="space-y-2">
         {posts.map((post: any) => (
           <li key={post.id}>
-            <a
+            <Link
               href={`/posts/${post.id}`}
               className="text-blue-600 hover:underline"
             >
               {post.title}
-            </a>
+            </Link>
             <div className="text-sm text-gray-500">
               {new Date(post.updatedAt).toLocaleString()}
             </div>
