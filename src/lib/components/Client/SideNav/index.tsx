@@ -36,6 +36,7 @@ export default function SideNav({
 }: SideNavProps) {
   const pathname = usePathname();
 
+  // 방어로직
   useEffect(() => {
     if (onRouteChange) {
       onRouteChange();
@@ -55,6 +56,7 @@ export default function SideNav({
           <Link
             href="/"
             className="flex items-center gap-2 cursor-pointer hover:text-black"
+            onClick={onRouteChange}
           >
             <FiHome />
             Home
@@ -64,6 +66,7 @@ export default function SideNav({
           <Link
             href="/about"
             className="flex items-center gap-2 cursor-pointer hover:text-black"
+            onClick={onRouteChange}
           >
             <FiUser />
             About
@@ -75,6 +78,7 @@ export default function SideNav({
             <Link
               href="/register"
               className="flex items-center gap-2 cursor-pointer hover:text-black"
+              onClick={onRouteChange}
             >
               <FiEdit />
               Register
@@ -88,7 +92,7 @@ export default function SideNav({
             onClick={onToggleDetail}
           >
             <FiCode />
-            <span className="flex-1">Dev Information</span>
+            Dev Information
             {isDetailOpen ? <FiChevronDown /> : <FiChevronRight />}
           </div>
 
@@ -100,9 +104,15 @@ export default function SideNav({
                     className="flex items-center justify-between"
                     key={`${category}_${index}`}
                   >
-                    <span>{item.name}</span>
-                    {/* TODO 신규 업데이트 된 게시글 추가 */}
-                    {/* <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full"></span> */}
+                    <Link
+                      href={`/post?category=${item.name}`}
+                      className="flex items-center gap-2 cursor-pointer hover:text-black"
+                      onClick={onRouteChange}
+                    >
+                      <span>{item.name}</span>
+                      {/* TODO 신규 업데이트 된 게시글 추가 */}
+                      {/* <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full"></span> */}
+                    </Link>
                   </li>
                 ))}
             </ul>
