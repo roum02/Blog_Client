@@ -1,3 +1,5 @@
+import { Textarea } from "@blog-client-components";
+
 export default function RegisterPage() {
   return (
     <div className="p-6">
@@ -49,13 +51,7 @@ export default function RegisterPage() {
           >
             내용
           </label>
-          <textarea
-            id="content"
-            name="content"
-            rows={8}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
+          <Textarea />
         </div>
 
         <div className="text-right">

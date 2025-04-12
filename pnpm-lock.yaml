@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      froala-editor:
+        specifier: ^4.5.1
+        version: 4.5.1
       next:
         specifier: 15.2.4
         version: 15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -17,6 +20,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
+      react-froala-wysiwyg:
+        specifier: ^4.5.1
+        version: 4.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
@@ -944,6 +950,9 @@ packages:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
     engines: {node: '>= 0.4'}
 
+  froala-editor@4.5.1:
+    resolution: {integrity: sha512-hgx4JJAM80yM3PGdyj7+41OQHP+Yj59yMvknwQkizlkbo/aKn2lbEtiqPMm//thNEE6NCuGLpHCZqppR/7Vymg==}
+
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
@@ -1425,6 +1434,12 @@ packages:
     resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
     peerDependencies:
       react: ^19.1.0
+
+  react-froala-wysiwyg@4.5.1:
+    resolution: {integrity: sha512-td4rAXVhMx9I5QBNaiPF6bWxrTZn1RX2/0xdFbZ2sjKcgVMk/VD6i99UagXDMa5WR4qfJqfz3p4QgUgGkhyqCA==}
+    peerDependencies:
+      react: ~0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ~0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
 
   react-icons@5.5.0:
     resolution: {integrity: sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==}
@@ -2704,6 +2719,8 @@ snapshots:
     dependencies:
       is-callable: 1.2.7
 
+  froala-editor@4.5.1: {}
+
   function-bind@1.1.2: {}
 
   function.prototype.name@1.1.8:
@@ -3184,6 +3201,12 @@ snapshots:
     dependencies:
       react: 19.1.0
       scheduler: 0.26.0
+
+  react-froala-wysiwyg@4.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      froala-editor: 4.5.1
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   react-icons@5.5.0(react@19.1.0):
     dependencies:
