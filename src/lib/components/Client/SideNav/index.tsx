@@ -11,10 +11,12 @@ import {
   FiChevronRight,
   FiCode,
 } from "react-icons/fi";
+import { Category } from "@blog-client-query";
 
 type SideNavProps = {
   isOpen: boolean;
   isAdmin: boolean;
+  category: Category;
   onRouteChange?: () => void;
   profileImage?: string;
   nickname?: string;

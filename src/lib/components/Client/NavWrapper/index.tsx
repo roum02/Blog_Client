@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TopNav from "../TopNav";
 import SideNav from "../SideNav";
+import { useCategories } from "@blog-client-query";
 
 export default function NavWrapper({
   children,
@@ -10,6 +11,7 @@ export default function NavWrapper({
   children: React.ReactNode;
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { data: categoryData } = useCategories();
 
   return (
     <>
@@ -18,6 +20,7 @@ export default function NavWrapper({
         isOpen={isSidebarOpen}
         isAdmin={true}
         onRouteChange={() => setIsSidebarOpen(false)}
+        category={categoryData}
       />
 
       {isSidebarOpen && (
