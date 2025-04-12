@@ -16,7 +16,9 @@ import { Category } from "@blog-client-query";
 type SideNavProps = {
   isOpen: boolean;
   isAdmin: boolean;
-  category: Category;
+  isDetailOpen: boolean;
+  onToggleDetail: () => void;
+  category?: Category[];
   onRouteChange?: () => void;
   profileImage?: string;
   nickname?: string;
@@ -25,12 +27,14 @@ type SideNavProps = {
 export default function SideNav({
   isOpen,
   isAdmin,
+  isDetailOpen,
+  onToggleDetail,
+  category,
   onRouteChange,
   profileImage = "https://item.kakaocdn.net/do/f54d975d70c2916c5705a0919f193a547154249a3890514a43687a85e6b6cc82",
   nickname = "Guest",
 }: SideNavProps) {
   const pathname = usePathname();
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   useEffect(() => {
     if (onRouteChange) {
@@ -81,7 +85,7 @@ export default function SideNav({
         <li>
           <div
             className="flex items-center gap-2 cursor-pointer hover:text-black"
-            onClick={() => setIsDetailOpen(!isDetailOpen)}
+            onClick={onToggleDetail}
           >
             <FiCode />
             <span className="flex-1">Dev Information</span>
@@ -90,24 +94,17 @@ export default function SideNav({
 
           {isDetailOpen && (
             <ul className="mt-2 ml-6 space-y-2 text-gray-600">
-              <li className="flex items-center justify-between">
-                <span>JavaScript</span>{" "}
-                <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                  43
-                </span>
-              </li>
-              <li className="flex items-center justify-between">
-                <span>TypeScript</span>{" "}
-                <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                  20
-                </span>
-              </li>
-              <li className="flex items-center justify-between">
-                <span>Python</span>{" "}
-                <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                  1
-                </span>
-              </li>
+              {category &&
+                category.map((item, index) => (
+                  <li
+                    className="flex items-center justify-between"
+                    key={`${category}_${index}`}
+                  >
+                    <span>{item.name}</span>
+                    {/* TODO 신규 업데이트 된 게시글 추가 */}
+                    {/* <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full"></span> */}
+                  </li>
+                ))}
             </ul>
           )}
         </li>

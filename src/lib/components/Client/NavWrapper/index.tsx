@@ -11,7 +11,11 @@ export default function NavWrapper({
   children: React.ReactNode;
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { data: categoryData } = useCategories();
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const { data: categoryData } = useCategories({
+    enabled: isDetailOpen,
+    staleTime: 1000 * 60 * 5,
+  });
 
   return (
     <>
@@ -21,6 +25,8 @@ export default function NavWrapper({
         isAdmin={true}
         onRouteChange={() => setIsSidebarOpen(false)}
         category={categoryData}
+        isDetailOpen={isDetailOpen}
+        onToggleDetail={() => setIsDetailOpen((prev) => !prev)}
       />
 
       {isSidebarOpen && (
