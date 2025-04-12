@@ -16,6 +16,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
   const params = await searchParams;
   const category = (params.category ?? "All") as CategoryKey;
 
+  // TODO fetch query 로 변경
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`);
 
   if (!res.ok) {
