@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface PostsPageProps {
   searchParams: Promise<{ category?: string }>;
@@ -20,7 +21,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch posts");
+    return notFound();
   }
 
   const posts = await res.json();
@@ -34,7 +35,11 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
         {posts.map((post: any) => (
           <li key={post.id}>
             <Link
-              href={`/posts/${post.id}`}
+              href={
+                category
+                  ? `/post/${post.id}?category=${encodeURIComponent(category)}`
+                  : `/post/${post.id}`
+              }
               className="text-blue-600 hover:underline"
             >
               {post.title}
