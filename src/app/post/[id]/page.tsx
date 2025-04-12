@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 interface PostDetailPageProps {
   params: Promise<{ id: string }>;
@@ -23,7 +24,6 @@ export default async function PostDetailPage({
   }
 
   const post = await res.json();
-  console.log(post);
 
   return (
     <div className="p-4">
@@ -37,6 +37,15 @@ export default async function PostDetailPage({
         className="mt-4 prose"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      <div className="mt-6 text-right">
+        <Link
+          href={`/register/${post.id}`}
+          className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          수정
+        </Link>
+      </div>
     </div>
   );
 }
