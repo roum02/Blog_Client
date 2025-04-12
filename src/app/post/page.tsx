@@ -4,9 +4,16 @@ interface PostsPageProps {
   searchParams: Promise<{ category?: string }>;
 }
 
+const CATEGORY_TITLE = {
+  All: "전체",
+  Tech: "기술",
+} as const;
+
+type CategoryKey = keyof typeof CATEGORY_TITLE;
+
 export default async function PostsPage({ searchParams }: PostsPageProps) {
   const params = await searchParams;
-  const category = params.category ?? "all";
+  const category = (params.category ?? "All") as CategoryKey;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, {
     next: { revalidate: 60 },
@@ -20,7 +27,9 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">전체 게시글</h1>
+      <h1 className="text-xl font-bold mb-4">
+        {CATEGORY_TITLE[category]} 게시글
+      </h1>
       <ul className="space-y-2">
         {posts.map((post: any) => (
           <li key={post.id}>
