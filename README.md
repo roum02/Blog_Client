@@ -7,6 +7,8 @@
 - Editor: react-froala-wysiwyg
 - Storage: EC2 내부 디렉토리 (/uploads/images) 사용
 
+금일 작업한 부분까지가 MVP
+
 FE 작업 예정인 기능 (~ 이번주 주말)
 
 - 신규 업데이트 될 게시글 추가
@@ -17,3 +19,5 @@ FE 작업 예정인 기능 (~ 이번주 주말)
 - 게시글 공개여부 설정
 - form -> react-hook-form 변경
 - login 처리
+- 댓글 기능
+- 질의응답 챗봇...
