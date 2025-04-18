@@ -3,7 +3,11 @@ import {
   QueryClient,
   HydrationBoundary,
 } from "@tanstack/react-query";
-import { POSTS_QUERY_KEY, getPost } from "@blog-client-query";
+import {
+  POSTS_QUERY_KEY,
+  getPost,
+  POSTS_DETAIL_QUERY_KEY,
+} from "@blog-client-query";
 import { Suspense } from "react";
 import PostDetailPageClient from "./client";
 
@@ -22,7 +26,7 @@ export default async function PostDetailPage({
   const searchParam = await searchParams;
 
   await queryClient.prefetchQuery({
-    queryKey: [...POSTS_QUERY_KEY, postId],
+    queryKey: POSTS_DETAIL_QUERY_KEY(postId),
     queryFn: () => getPost(postId),
   });
 

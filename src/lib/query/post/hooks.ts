@@ -2,6 +2,8 @@ import { useQuery, UseQueryOptions, useMutation } from "@tanstack/react-query";
 import { getPosts, getPost, Post, CreatePostPayload, createPost } from "./api";
 
 export const POSTS_QUERY_KEY = ["POSTS"] as const;
+export const POSTS_DETAIL_QUERY_KEY = (id: number) =>
+  [...POSTS_QUERY_KEY, id] as const;
 
 export const usePosts = (
   options?: Omit<
@@ -24,7 +26,7 @@ export const usePost = (
   >
 ) => {
   return useQuery({
-    queryKey: [...POSTS_QUERY_KEY, id] as const,
+    queryKey: POSTS_DETAIL_QUERY_KEY(id),
     queryFn: () => getPost(id),
     enabled: !!id,
     ...options,

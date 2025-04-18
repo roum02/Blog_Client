@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { POSTS_QUERY_KEY, getPost, usePost } from "@blog-client-query";
+import { usePost } from "@blog-client-query";
 import { notFound } from "next/navigation";
 import dayjs from "@blog-client-dayjs";
 
