@@ -1,11 +1,11 @@
 "use client";
 
+import { Controller, useFormContext } from "react-hook-form";
 import "froala-editor/js/plugins.pkgd.min.js";
 import "froala-editor/css/froala_editor.pkgd.min.css";
 import "froala-editor/css/froala_style.min.css";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
 
 const FroalaEditor = dynamic(() => import("react-froala-wysiwyg"), {
   ssr: false,
@@ -16,27 +16,33 @@ interface TextareaProps {
   onChange: (val: string) => void;
 }
 
-export default function Textarea({ value, onChange }: TextareaProps) {
-  const handleModelChange = (newContent: string) => {
-    onChange(newContent); // 사용자가 입력한 HTML 저장
-  };
+export default function Textarea() {
+  const { register, control } = useFormContext();
 
   return (
-    <>
-      <FroalaEditor
-        model={value}
-        onModelChange={handleModelChange}
-        config={{
-          placeholderText: "Write something amazing...",
-        }}
-      />
-      {/* <div className="mt-6">
+    <Controller
+      name="content"
+      control={control}
+      render={({ field }) => (
+        <FroalaEditor
+          {...register("content")}
+          model={field.value}
+          onModelChange={field.onChange}
+          config={{
+            placeholderText: "Write something amazing...",
+          }}
+        />
+      )}
+    />
+  );
+}
+
+{
+  /* <div className="mt-6">
         <h2 className="font-bold mb-2">Preview:</h2>
         <div
           className="border p-4"
           dangerouslySetInnerHTML={{ __html: content }}
         />
-      </div> */}
-    </>
-  );
+      </div> */
 }
