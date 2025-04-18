@@ -19,12 +19,12 @@ export const usePosts = (
 export const usePost = (
   id: number,
   options?: Omit<
-    UseQueryOptions<Post, Error, Post, readonly ["posts", number]>,
+    UseQueryOptions<Post, Error, Post, readonly ["POSTS", number]>,
     "queryKey" | "queryFn"
   >
 ) => {
   return useQuery({
-    queryKey: ["posts", id] as const,
+    queryKey: [...POSTS_QUERY_KEY, id] as const,
     queryFn: () => getPost(id),
     enabled: !!id,
     ...options,

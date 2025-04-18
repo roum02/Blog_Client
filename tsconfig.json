@@ -25,7 +25,8 @@
       "@blog-client-components/*": ["src/lib/components/Client/*"],
       "@blog-client-axios/*": ["src/lib/axios/*"],
       "@blog-client-query": ["src/lib/query"],
-      "@blog-client-query/*": ["src/lib/query/*"]
+      "@blog-client-query/*": ["src/lib/query/*"],
+      "@blog-client-dayjs": ["src/lib/dayjs"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
