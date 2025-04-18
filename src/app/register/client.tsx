@@ -13,16 +13,13 @@ interface PostRegisterClientProps {
   //categories: { id: number; name: string }[];
 }
 
-interface RegisterInputType {
-  title: string;
-  categoryId: number;
-  content: string;
-}
+type RegisterInputType = yup.InferType<typeof schema>;
 
 const schema = yup.object({
   title: yup.string().required(),
   categoryId: yup.number().required(),
   content: yup.string().required(),
+  isPublished: yup.string().oneOf(["true", "false"]).required(),
 });
 
 export default function PostRegisterClient({}: PostRegisterClientProps) {
@@ -33,6 +30,9 @@ export default function PostRegisterClient({}: PostRegisterClientProps) {
 
   const methods = useForm<RegisterInputType>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      isPublished: "true",
+    },
   });
 
   const {
@@ -56,7 +56,7 @@ export default function PostRegisterClient({}: PostRegisterClientProps) {
         content: data.content,
         categoryId: Number(data.categoryId),
         authorId: 1,
-        isPublished: true,
+        isPublished: data.isPublished === "true",
       });
 
       alert("게시글이 성공적으로 등록되었습니다");
@@ -106,6 +106,30 @@ export default function PostRegisterClient({}: PostRegisterClientProps) {
               </option>
             ))}
           </select>
+        </div>
+
+        <span className="block text-sm font-medium text-gray-700 mb-1">
+          공개 여부
+        </span>
+        <div className="flex items-center space-x-4">
+          <label className="flex items-center space-x-1">
+            <input
+              type="radio"
+              value="true"
+              {...register("isPublished")}
+              className="text-blue-500"
+            />
+            <span>공개</span>
+          </label>
+          <label className="flex items-center space-x-1">
+            <input
+              type="radio"
+              value="false"
+              {...register("isPublished")}
+              className="text-blue-500"
+            />
+            <span>비공개</span>
+          </label>
         </div>
 
         <div>
