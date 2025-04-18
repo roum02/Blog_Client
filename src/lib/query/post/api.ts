@@ -9,10 +9,10 @@ export interface Post {
   isPublished: boolean;
   createdAt: string;
   updatedAt: string;
-  // TODO 카테고리 추가
   category: {
     id: number;
     name: string;
+    description?: string;
   };
 }
 

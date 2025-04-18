@@ -5,6 +5,8 @@ import { getCategories } from "./api";
 import { Category } from "./type";
 
 export const CATEGORY_QUERY_KEY = ["CATEGOIES"] as const;
+export const CATEGORY_DETAIL_QUERY_KEY = (id: number) =>
+  [...CATEGORY_QUERY_KEY, id] as const;
 
 export const useCategories = (
   options?: Omit<

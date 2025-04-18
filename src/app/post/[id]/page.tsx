@@ -23,7 +23,6 @@ export default async function PostDetailPage({
   const queryClient = new QueryClient();
   const param = await params;
   const postId = Number(param.id);
-  const searchParam = await searchParams;
 
   await queryClient.prefetchQuery({
     queryKey: POSTS_DETAIL_QUERY_KEY(postId),
