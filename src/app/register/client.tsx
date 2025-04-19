@@ -9,9 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-interface PostRegisterClientProps {
-  //categories: { id: number; name: string }[];
-}
+// interface PostRegisterClientProps {
+//   categories: { id: number; name: string }[];
+// }
 
 type RegisterInputType = yup.InferType<typeof schema>;
 
@@ -22,7 +22,7 @@ const schema = yup.object({
   isPublished: yup.string().oneOf(["true", "false"]).required(),
 });
 
-export default function PostRegisterClient({}: PostRegisterClientProps) {
+export default function PostRegisterClient({}) {
   const { data: categories = [] } = useQuery({
     queryKey: CATEGORY_QUERY_KEY,
     queryFn: getCategories,
@@ -35,11 +35,7 @@ export default function PostRegisterClient({}: PostRegisterClientProps) {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { register, handleSubmit } = methods;
 
   const { mutateAsync } = useCreatePost();
   const router = useRouter();
@@ -62,7 +58,7 @@ export default function PostRegisterClient({}: PostRegisterClientProps) {
       alert("게시글이 성공적으로 등록되었습니다");
       router.push("/post");
     } catch (error) {
-      alert("등록에 실패했습니다.");
+      alert(`${error} 등록에 실패했습니다.`);
     }
   };
 

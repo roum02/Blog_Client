@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Post } from "@blog-client-query";
 
 interface PostsPageProps {
   searchParams: Promise<{ category?: string }>;
@@ -31,7 +32,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
         {CATEGORY_TITLE[category]} 게시글
       </h1>
       <ul className="space-y-2">
-        {posts.map((post: any) => (
+        {posts.map((post: Post) => (
           <li key={post.id}>
             <Link
               href={

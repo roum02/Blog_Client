@@ -1,3 +1,5 @@
+"use client";
+
 import { Comment } from "@/lib/query/comment/type";
 
 interface CommentListProps {
