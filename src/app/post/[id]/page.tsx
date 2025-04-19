@@ -4,9 +4,10 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 import {
-  POSTS_QUERY_KEY,
   getPost,
   POSTS_DETAIL_QUERY_KEY,
+  COMMENT_DETAIL_QUERY_KEY,
+  getComments,
 } from "@blog-client-query";
 import { Suspense } from "react";
 import PostDetailPageClient from "./client";
@@ -27,6 +28,11 @@ export default async function PostDetailPage({
   await queryClient.prefetchQuery({
     queryKey: POSTS_DETAIL_QUERY_KEY(postId),
     queryFn: () => getPost(postId),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: COMMENT_DETAIL_QUERY_KEY(postId),
+    queryFn: () => getComments(postId),
   });
 
   const dehydratedState = dehydrate(queryClient);
