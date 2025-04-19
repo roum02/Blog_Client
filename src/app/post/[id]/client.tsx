@@ -1,14 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { usePost, useCommentsByPostId } from "@blog-client-query";
+import {
+  usePost,
+  useCommentsByPostId,
+  useSaveComment,
+} from "@blog-client-query";
 import { notFound } from "next/navigation";
 import dayjs from "@blog-client-dayjs";
-import { CommentList } from "@/lib/components/Client";
+import { CommentList, CommentForm } from "@/lib/components/Client";
 
 export default function PostDetailPageClient({ postId }: { postId: number }) {
   const { data: post } = usePost(postId);
   const { data: comments } = useCommentsByPostId(postId);
+  const { mutate: saveComment, isPending } = useSaveComment(postId);
 
   if (!post || !comments) {
     return notFound();
@@ -40,6 +45,18 @@ export default function PostDetailPageClient({ postId }: { postId: number }) {
       <div className="mt-10">
         <h2 className="text-xl font-semibold mb-4">댓글</h2>
         <CommentList comments={comments} />
+        {/* TODO 로그인 이후 수정 */}
+        <CommentForm
+          onSubmit={(content) =>
+            saveComment({
+              content,
+              categoryId: post.category.id,
+              authorId: 2,
+              isPublished: true,
+            })
+          }
+          isSubmitting={isPending}
+        />
       </div>
     </div>
   );

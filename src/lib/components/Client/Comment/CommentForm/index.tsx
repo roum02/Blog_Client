@@ -16,7 +16,7 @@ export default function CommentForm({
   const handleFormSubmit = ({ content }: { content: string }) => {
     if (!content.trim()) return;
     onSubmit(content);
-    reset(); // 작성 완료 후 내용 초기화
+    reset();
   };
 
   return (

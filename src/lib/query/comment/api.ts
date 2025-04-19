@@ -3,9 +3,10 @@ import { Comment } from "./type";
 
 export interface CreateCommentPayload {
   content: string;
+  // 카테고리 아이디 삭제
   categoryId: number;
-  authorId: number;
-  isPublished: boolean;
+  authorId?: number;
+  isPublished?: boolean;
 }
 
 export const getComments = async (postId: number): Promise<Comment[]> => {
