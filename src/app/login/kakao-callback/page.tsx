@@ -9,22 +9,34 @@ export default function KakaoCallbackPage() {
   const code = searchParams.get("code");
 
   useEffect(() => {
+    const handleKakaoLogin = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/kakao`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "서버 오류");
+        }
+
+        const data = await response.json();
+
+        // 로그인 성공 처리
+        alert(`로그인 성공 ${JSON.stringify(data)}`);
+        router.push("/");
+      } catch (err) {
+        alert(`로그인 실패: ${(err as Error).message}`);
+      }
+    };
+
     if (code) {
-      // 백엔드에 인증 요청
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/kakao`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // 토큰 저장 or 로그인 처리
-          alert(`로그인 성공`);
-          router.push("/");
-        })
-        .catch((err) => {
-          alert(`로그인 실패 ${err}`);
-        });
+      handleKakaoLogin();
     }
   }, [code]);
 
