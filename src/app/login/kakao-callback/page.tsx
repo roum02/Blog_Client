@@ -16,6 +16,7 @@ export default function KakaoCallbackPage() {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include", // 쿠키 포함 설정
             body: JSON.stringify({ code }),
           }
         );
