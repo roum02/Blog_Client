@@ -14,7 +14,7 @@ export default function CommentForm({
   const { register, handleSubmit, reset } = useForm<{ content: string }>();
 
   const handleFormSubmit = ({ content }: { content: string }) => {
-    if (!content.trim()) return;
+    if (!content) return;
     onSubmit(content);
     reset();
   };

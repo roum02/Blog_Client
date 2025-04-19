@@ -3,8 +3,7 @@ import { Comment } from "./type";
 
 export interface CreateCommentPayload {
   content: string;
-  // 카테고리 아이디 삭제
-  categoryId: number;
+  postId: number;
   authorId?: number;
   isPublished?: boolean;
 }

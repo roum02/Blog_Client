@@ -50,7 +50,7 @@ export default function PostDetailPageClient({ postId }: { postId: number }) {
           onSubmit={(content) =>
             saveComment({
               content,
-              categoryId: post.category.id,
+              postId,
               authorId: 2,
               isPublished: true,
             })
