@@ -26,3 +26,22 @@
 - 이미지 저장 S3 추가
 - 글 수정/ 삭제
 - (차차) 질의응답 챗봇
+
+# login process
+
+- connectionless: HTTP는 연결을 유지하지 않는다.
+- stateless: HTTP는 상태를 유지하지 않는다.
+
+## 1) session
+
+![session](https://velog.velcdn.com/images%2Fjunghyeonsu%2Fpost%2F7f05d33e-520c-4617-9776-183a0d9611d5%2Fimage.png)
+
+## 2) JWT token
+
+![secret_key](https://velog.velcdn.com/images%2Fjunghyeonsu%2Fpost%2Ff651801b-8494-4913-82c6-ff89f8bbd59f%2F%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-09-15%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%208.45.47.png)
+
+### 2-1) Only "Access Token"
+
+![access-token](https://velog.velcdn.com/images%2Fjunghyeonsu%2Fpost%2Faf0fc689-e01a-484e-9519-267cba590864%2F%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-09-14%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%209.02.17.png)
+
+### 2-2) with refresh token
