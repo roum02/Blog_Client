@@ -45,3 +45,7 @@
 ![access-token](https://velog.velcdn.com/images%2Fjunghyeonsu%2Fpost%2Faf0fc689-e01a-484e-9519-267cba590864%2F%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-09-14%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%209.02.17.png)
 
 ### 2-2) with refresh token
+
+## HttpOnly
+
+: HttpOnly 쿠키 속성을 사용하면 JavaScript를 통해 쿠키에 접근할 수 없게 되어, 악성 스크립트를 통해 쿠키 값에 접근하는 것을 막아준다.
