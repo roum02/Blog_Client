@@ -51,3 +51,9 @@
 ## HttpOnly
 
 : HttpOnly 쿠키 속성을 사용하면 JavaScript를 통해 쿠키에 접근할 수 없게 되어, 악성 스크립트를 통해 쿠키 값에 접근하는 것을 막아준다.
+
+## 이슈
+
+- 새로고침 이후 cookie 사라지는 이슈..
+
+- 의심되는 원인 1) http or https
