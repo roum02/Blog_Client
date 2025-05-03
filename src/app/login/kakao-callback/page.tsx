@@ -30,10 +30,10 @@ export default function KakaoCallbackPage() {
 
         // 로그인 성공 처리
         alert(`로그인 성공 ${JSON.stringify(data)}`);
-        router.push("/");
       } catch (err) {
         alert(`로그인 실패: ${(err as Error).message}`);
       }
+      router.push("/");
     };
 
     if (code) {

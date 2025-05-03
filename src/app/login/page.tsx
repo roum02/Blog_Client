@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const REDIRECT_URI = "http://localhost:3000/login/kakao-callback";
+const REDIRECT_URI = "https://localhost:3000/login/kakao-callback";
 
 const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${
   process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID
@@ -15,12 +15,12 @@ export default function LoginPage() {
     try {
       await axios.post("/auth/logout", {}, { withCredentials: true });
       alert("로그아웃 완료");
-      router.push("/");
     } catch (error: any) {
       alert(
         `로그아웃 실패: ${error?.response?.data?.message || error.message}`
       );
     }
+    router.push("/");
   };
 
   return (
