@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type MemberType = "ADMMIN" | "GUEST" | "NONE";
 
@@ -10,7 +11,6 @@ interface UserType {
 
 interface AuthStore {
   user: UserType | null;
-  accessToken: string | null;
   isLoggedIn: boolean;
   setAuth: (user: UserType, accessToken: string) => void;
   clearAuth: () => void;
@@ -18,20 +18,26 @@ interface AuthStore {
 
 const clearLoginState = {
   user: null,
-  accessToken: null,
   isLoggedIn: false,
 } as const;
 
-export const useAuthStore = create<AuthStore>((set) => {
-  return {
-    user: null,
-    accessToken: null,
-    isLoggedIn: false,
-    setAuth: (user, accessToken) => {
-      set({ user, accessToken, isLoggedIn: true });
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => {
+      return {
+        user: null,
+        accessToken: null,
+        isLoggedIn: false,
+        setAuth: (user, accessToken) => {
+          set({ user, isLoggedIn: true });
+        },
+        clearAuth: () => {
+          set(clearLoginState);
+        },
+      };
     },
-    clearAuth: () => {
-      set(clearLoginState);
-    },
-  };
-});
+    {
+      name: "auth-storage",
+    }
+  )
+);
