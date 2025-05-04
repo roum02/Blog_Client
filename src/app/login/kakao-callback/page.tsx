@@ -2,11 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 
 export default function KakaoCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+
+  const { setAuth } = useAuthStore();
 
   useEffect(() => {
     const handleKakaoLogin = async () => {
@@ -27,9 +30,16 @@ export default function KakaoCallbackPage() {
         }
 
         const data = await response.json();
+        const { role, nickname, kakaoId } = data.user;
+
+        setAuth({
+          memberType: role,
+          memberNickName: nickname,
+          memberId: kakaoId,
+        });
 
         // 로그인 성공 처리
-        alert(`로그인 성공 ${JSON.stringify(data)}`);
+        alert(`Hello, ${nickname}!`);
       } catch (err) {
         alert(`로그인 실패: ${(err as Error).message}`);
       }
