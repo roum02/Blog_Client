@@ -12,7 +12,7 @@ interface UserType {
 interface AuthStore {
   user: UserType | null;
   isLoggedIn: boolean;
-  setAuth: (user: UserType, accessToken: string) => void;
+  setAuth: (user: UserType) => void;
   clearAuth: () => void;
 }
 
@@ -26,9 +26,8 @@ export const useAuthStore = create<AuthStore>()(
     (set) => {
       return {
         user: null,
-        accessToken: null,
         isLoggedIn: false,
-        setAuth: (user, accessToken) => {
+        setAuth: (user) => {
           set({ user, isLoggedIn: true });
         },
         clearAuth: () => {

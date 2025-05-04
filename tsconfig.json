@@ -26,7 +26,9 @@
       "@blog-client-axios/*": ["src/lib/axios/*"],
       "@blog-client-query": ["src/lib/query"],
       "@blog-client-query/*": ["src/lib/query/*"],
-      "@blog-client-dayjs": ["src/lib/dayjs"]
+      "@blog-client-dayjs": ["src/lib/dayjs"],
+      "@blog-client-store/*": ["src/lib/store/*"],
+      "@blog-client-store": ["src/lib/store"]
     }
   },
   "include": [
