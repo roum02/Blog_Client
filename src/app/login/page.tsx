@@ -1,5 +1,6 @@
 "use client";
-import axios from "axios";
+import { useAuthStore } from "@/lib/store/useAuthStore";
+import axios from "@/lib/axios/instance";
 import { useRouter } from "next/navigation";
 
 const REDIRECT_URI = "https://localhost:3000/login/kakao-callback";
@@ -10,10 +11,12 @@ const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${
 
 export default function LoginPage() {
   const router = useRouter();
+  const { clearAuth } = useAuthStore();
 
   const handleLogout = async () => {
     try {
-      await axios.post("/auth/logout", {}, { withCredentials: true });
+      await axios.post(`/auth/logout`, {}, { withCredentials: true });
+      clearAuth();
       alert("로그아웃 완료");
     } catch (error: any) {
       alert(
