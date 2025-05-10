@@ -29,7 +29,10 @@
 - 글 수정/ 삭제
 - (차차) 질의응답 챗봇
 
+
 # login process
+
+https://velog.io/@roum02/JWT-%ED%86%A0%ED%81%B0%EC%9D%B4%EB%9E%91-%EC%8B%B8%EC%9A%B0%EA%B8%B0 
 
 - connectionless: HTTP는 연결을 유지하지 않는다.
 - stateless: HTTP는 상태를 유지하지 않는다.
