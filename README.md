@@ -33,6 +33,7 @@
 # login process
 
 <a href="https://velog.io/@roum02/%EC%B9%B4%EC%B9%B4%EC%98%A4-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%9B%84-%EC%BF%A0%ED%82%A4-%EC%83%88%EB%A1%9C%EA%B3%A0%EC%B9%A8-%EC%8B%9C-%EC%82%AC%EB%9D%BC%EC%A7%80%EB%8A%94-%ED%98%84%EC%83%81-%EC%88%98%EC%A0%95">에러 핸들링 포스팅1 </a> 
+<br />
 <a href="https://velog.io/@roum02/JWT-%ED%86%A0%ED%81%B0%EC%9D%B4%EB%9E%91-%EC%8B%B8%EC%9A%B0%EA%B8%B0">에러 핸들링 포스팅1 </a>
 - connectionless: HTTP는 연결을 유지하지 않는다.
 - stateless: HTTP는 상태를 유지하지 않는다.
