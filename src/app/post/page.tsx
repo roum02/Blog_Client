@@ -20,6 +20,8 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
   // TODO fetch query 로 변경
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`);
 
+  console.log(res);
+
   if (!res.ok) {
     return notFound();
   }

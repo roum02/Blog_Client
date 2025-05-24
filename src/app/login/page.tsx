@@ -34,11 +34,20 @@ export default function LoginPage() {
         </button>
       </a>
 
+      <a
+      //href={googleAuthUrl}
+      >
+        <button className="bg-blue-600 text-white px-4 py-2 rounded ml-2">
+          구글 로그인
+        </button>
+      </a>
+
+      {/* 통합 로그아웃 */}
       <button
-        className="bg-gray-800 text-white px-4 py-2 rounded"
+        className="bg-gray-800 text-white px-4 py-2 rounded ml-2"
         onClick={handleLogout}
       >
-        카카오 로그아웃
+        로그아웃
       </button>
     </>
   );
