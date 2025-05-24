@@ -11,6 +11,8 @@ import {
 } from "react-icons/fi";
 import { Category } from "@blog-client-query";
 import Image from "next/image";
+import { useAuthStore } from "@blog-client-store/useAuthStore";
+import { useMemo } from "react";
 
 type SideNavProps = {
   isOpen: boolean;
@@ -23,6 +25,19 @@ type SideNavProps = {
   nickname?: string;
 };
 
+const PROFILE_IMAGES = [
+  "https://i.pinimg.com/originals/2f/55/97/2f559707c3b04a1964b37856f00ad608.jpg",
+  "https://i.pinimg.com/originals/20/e8/0d/20e80d9ccf4e7c7a68539771b0cae3c3.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2-pg1Dy7Lbs1U-l9uL_gbYNtlrMzMN0mDgJDzexObokS1SxE7ad0G6JdiehmjBMVtYTw&usqp=CAU",
+  "https://i.pinimg.com/originals/2f/55/97/2f559707c3b04a1964b37856f00ad608.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBeUdv9BYhLSfucfygpsTvLfSZHAJQ3lEhqPKlRcf9fkIlCJljY0mwtuIGNJpqhDqtuPU&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2-pg1Dy7Lbs1U-l9uL_gbYNtlrMzMN0mDgJDzexObokS1SxE7ad0G6JdiehmjBMVtYTw&usqp=CAU",
+  "https://i.pinimg.com/236x/48/06/65/4806655144635765866e5b1361d4a9c0.jpg",
+];
+
+const GUEST_PROFILE_IMAGE =
+  "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMTBfODAg/MDAxNTgxMzA0MTE3ODMy.ACRLtB9v5NH-I2qjWrwiXLb7TeUiG442cJmcdzVum7cg.eTLpNg_n0rAS5sWOsofRrvBy0qZk_QcWSfUiIagTfd8g.JPEG.lattepain/1581304118739.jpg?type=w800";
+
 export default function SideNav({
   isOpen,
   isAdmin,
@@ -30,16 +45,34 @@ export default function SideNav({
   onToggleDetail,
   category,
   onRouteChange,
-  profileImage = "https://item.kakaocdn.net/do/f54d975d70c2916c5705a0919f193a547154249a3890514a43687a85e6b6cc82",
   nickname = "Guest",
 }: SideNavProps) {
+  const { user } = useAuthStore();
+  const getProfileImageByUserId = (userId?: string): string => {
+    if (!userId) {
+      return GUEST_PROFILE_IMAGE;
+    }
+    const index =
+      Array.from(userId).reduce((acc, char) => acc + char.charCodeAt(0), 0) %
+      PROFILE_IMAGES.length;
+    return PROFILE_IMAGES[index];
+  };
+
+  const profileImage = useMemo(
+    () => getProfileImageByUserId(user?.memberId),
+    [user]
+  );
+
   return (
     <aside
       className={`fixed top-14 left-0 w-60 h-full bg-gray-100 border-r border-gray-300 p-4 transition-transform duration-300 z-50
       ${isOpen ? "translate-x-0" : "-translate-x-full"}
     `}
     >
-      <ProfileContent profileImage={profileImage} nickname={nickname} />
+      <ProfileContent
+        profileImage={profileImage}
+        nickname={user?.memberNickName || nickname}
+      />
 
       <ul className="space-y-3 text-gray-800 text-sm">
         <li>
