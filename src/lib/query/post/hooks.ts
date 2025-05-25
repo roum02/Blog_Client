@@ -1,9 +1,25 @@
-import { useQuery, UseQueryOptions, useMutation } from "@tanstack/react-query";
+import {
+  useQuery,
+  UseQueryOptions,
+  useMutation,
+  QueryClient,
+} from "@tanstack/react-query";
 import { getPosts, getPost, Post, CreatePostPayload, createPost } from "./api";
 
 export const POSTS_QUERY_KEY = ["POSTS"] as const;
 export const POSTS_DETAIL_QUERY_KEY = (id: number) =>
   [...POSTS_QUERY_KEY, id] as const;
+
+const queryClient = new QueryClient();
+
+export const prefetchPosts = async () => {
+  await queryClient.prefetchQuery({
+    queryKey: POSTS_QUERY_KEY,
+    queryFn: getPosts,
+  });
+
+  return queryClient.getQueryData(POSTS_QUERY_KEY);
+};
 
 export const usePosts = (
   options?: Omit<
