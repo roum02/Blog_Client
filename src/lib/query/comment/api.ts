@@ -4,7 +4,7 @@ import { Comment } from "./type";
 export interface CreateCommentPayload {
   content: string;
   postId: number;
-  authorId?: number;
+  authorId: string;
   isPublished?: boolean;
 }
 
