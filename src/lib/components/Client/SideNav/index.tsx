@@ -16,7 +16,6 @@ import { useMemo } from "react";
 
 type SideNavProps = {
   isOpen: boolean;
-  isAdmin: boolean;
   isDetailOpen: boolean;
   onToggleDetail: () => void;
   category?: Category[];
@@ -40,7 +39,6 @@ const GUEST_PROFILE_IMAGE =
 
 export default function SideNav({
   isOpen,
-  isAdmin,
   isDetailOpen,
   onToggleDetail,
   category,
@@ -96,7 +94,7 @@ export default function SideNav({
           </Link>
         </li>
 
-        {isAdmin && (
+        {user?.memberType === "ADMIN" && (
           <li>
             <Link
               href="/register"

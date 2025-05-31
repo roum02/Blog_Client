@@ -19,7 +19,7 @@ export default function CommentList({ comments }: CommentListProps) {
             {comment.content}
           </p>
           <p className="text-xs text-gray-500 mt-2">
-            작성자 ID: {comment.authorId} |{" "}
+            작성자: {comment.authorId} |{" "}
             {new Date(comment.createdAt).toLocaleString("ko-KR")}
           </p>
         </li>
