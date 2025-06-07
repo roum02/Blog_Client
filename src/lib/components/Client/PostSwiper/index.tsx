@@ -1,6 +1,7 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Post } from "@blog-client-query";
 
 const PostSwiper = ({
   posts,
@@ -43,28 +44,21 @@ const PostSwiper = ({
 
 export default PostSwiper;
 
-interface Post {
-  id: number;
-  title: string;
-  summary: string;
-  date: string;
-  thumbnail?: string;
-}
-
 function PostCard({ post }: { post: Post }) {
   return (
     <article className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col">
-      {post.thumbnail && (
-        <img
-          src={post.thumbnail}
-          alt={`${post.title} 썸네일`}
-          className="w-full h-40 object-cover rounded-md mb-4"
-          loading="lazy"
-        />
-      )}
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKH22KNrTddpUPQi_9whU_jmV2cuqLbXbdIQ&s"
+        alt={`${post.title} 썸네일`}
+        className="w-full h-40 object-cover rounded-md mb-4"
+        loading="lazy"
+      />
+
       <h3 className="text-lg font-bold mb-2">{post.title}</h3>
-      <p className="text-gray-700 mb-3 flex-grow">{post.summary}</p>
-      <time className="text-sm text-gray-400">{post.date}</time>
+      <p className="text-gray-700 mb-3 flex-grow">
+        {post.category.description}
+      </p>
+      <time className="text-sm text-gray-400">{post.updatedAt}</time>
     </article>
   );
 }

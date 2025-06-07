@@ -19,7 +19,9 @@ export const POSTS_DETAIL_QUERY_KEY = (id: number) =>
 
 const queryClient = new QueryClient();
 
-export const prefetchPosts = async (query = {}) => {
+export const prefetchPosts = async (
+  query = {}
+): Promise<PostList | undefined> => {
   await queryClient.prefetchQuery({
     queryKey: [...POSTS_QUERY_KEY, query],
     queryFn: ({ queryKey }) => {
@@ -28,7 +30,7 @@ export const prefetchPosts = async (query = {}) => {
     },
   });
 
-  return queryClient.getQueryData(POSTS_QUERY_KEY);
+  return queryClient.getQueryData([...POSTS_QUERY_KEY, query]);
 };
 
 export const usePosts = (
