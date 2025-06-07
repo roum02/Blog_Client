@@ -9,20 +9,34 @@ const PostSwiper = ({
   posts: Post[];
   CardComponent?: React.ComponentType<{ post: Post }>;
 }) => {
+  const handleMoreClick = () => {};
+
   return (
     <Swiper
       spaceBetween={16}
-      slidesPerView={1}
+      slidesPerView="auto"
       breakpoints={{
-        640: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
+        640: { slidesPerView: "auto" },
+        1024: { slidesPerView: "auto" },
       }}
     >
       {posts.map((post) => (
-        <SwiperSlide key={post.id}>
+        <SwiperSlide
+          key={post.id}
+          style={{ width: 300, flexShrink: 0 }}
+          className="!w-[300px]"
+        >
           <CardComponent post={post} />
         </SwiperSlide>
       ))}
+      <SwiperSlide
+        key="more-slide"
+        style={{ width: 150, flexShrink: 0 }}
+        className="!w-[150px] flex items-center justify-center cursor-pointer rounded-lg shadow-sm hover:shadow-md"
+        onClick={handleMoreClick}
+      >
+        <MoreSlide onClick={handleMoreClick} />
+      </SwiperSlide>
     </Swiper>
   );
 };
@@ -52,5 +66,24 @@ function PostCard({ post }: { post: Post }) {
       <p className="text-gray-700 mb-3 flex-grow">{post.summary}</p>
       <time className="text-sm text-gray-400">{post.date}</time>
     </article>
+  );
+}
+
+function MoreSlide({ onClick }: { onClick?: () => void }) {
+  return (
+    <div
+      onClick={onClick}
+      className="rounded-lg p-4 shadow-sm flex items-center justify-center cursor-pointer hover:shadow-md transition-shadow h-full"
+      style={{ minHeight: 302 }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onClick?.();
+        }
+      }}
+    >
+      <span className="text-xl font-semibold text-blue-600">+ 더보기</span>
+    </div>
   );
 }
