@@ -34,7 +34,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
         {CATEGORY_TITLE[category]} 게시글
       </h1>
       <ul className="space-y-2">
-        {posts.map((post: Post) => (
+        {posts.posts.map((post: Post) => (
           <li key={post.id}>
             <Link
               href={

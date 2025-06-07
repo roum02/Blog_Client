@@ -1,4 +1,10 @@
 import axios from "@/lib/axios/instance";
+import qs from "qs";
+
+export interface PostList {
+  posts: Post[];
+  totalCount: number;
+}
 
 export interface Post {
   id: number;
@@ -24,8 +30,11 @@ export interface CreatePostPayload {
   isPublished: boolean;
 }
 
-export const getPosts = async (): Promise<Post[]> => {
-  const res = await axios.get("/posts");
+export const getPosts = async (
+  query: Record<string, string | number>
+): Promise<PostList> => {
+  const queryString = qs.stringify(query, { skipNulls: true });
+  const res = await axios.get(`/posts?${queryString}`);
   return res.data;
 };
 

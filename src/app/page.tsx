@@ -1,4 +1,4 @@
-import { PostSwiper } from "@/lib/components/Client";
+import { PostSwiper, PostListWithMoreButton } from "@/lib/components/Client";
 
 const bannerData = {
   imageUrl:
@@ -43,13 +43,17 @@ export default function Home() {
     <div className="p-4 max-w-5xl mx-auto">
       <ImageBanner {...bannerData} />
       <h2 className="text-2xl font-semibold mt-10 mb-2 flex items-center gap-2">
-        최신 글 <span className="text-yellow-400">✨</span>
+        인기 글 <span className="text-yellow-400">✨</span>
       </h2>
-      <p className="mb-6 text-gray-600">
-        따끈따근 하게 올라온 최신 포스팅을 구경해보세요 !
-      </p>
+      <p className="mb-6 text-gray-600">인기 있는 포스팅을 구경해보세요 !</p>
 
       <PostSwiper posts={latestPosts} />
+
+      <h2 className="text-2xl font-semibold mt-10 mb-2 flex items-center gap-2">
+        전체 글
+      </h2>
+
+      <PostListWithMoreButton />
     </div>
   );
 }
