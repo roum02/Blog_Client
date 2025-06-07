@@ -21,12 +21,15 @@ function PostListWithMoreButton() {
         ))}
       </div>
       {(posts?.totalCount || 0) > initLimitRow && (
-        <button
-          onClick={loadMore}
-          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
-        >
-          더 보기
-        </button>
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={loadMore}
+            className="flex items-center gap-2 px-6 py-3 bg-transparent text-green-600 border border-green-600 rounded hover:bg-green-100 disabled:opacity-50 transition"
+          >
+            <span className="text-xl">＋</span>
+            <span>더 보기</span>
+          </button>
+        </div>
       )}
     </>
   );
