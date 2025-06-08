@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@blog-client-components";
 import { useCreatePost } from "@/lib/query/post/hooks";
@@ -23,6 +24,7 @@ const schema = yup.object({
 });
 
 export default function PostRegisterClient({}) {
+  const [activeTab, setActiveTab] = useState<"url" | "upload">("url");
   const { data: categories = [] } = useQuery({
     queryKey: CATEGORY_QUERY_KEY,
     queryFn: getCategories,
@@ -127,6 +129,75 @@ export default function PostRegisterClient({}) {
             <span>비공개</span>
           </label>
         </div>
+
+        {/* 탭 버튼 */}
+        <div className="flex border-b mb-4">
+          <button
+            type="button"
+            className={`flex-1 py-2 text-center ${
+              activeTab === "url"
+                ? "border-b-2 border-blue-600 font-semibold"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("url")}
+          >
+            URL 입력
+          </button>
+          <button
+            type="button"
+            className={`flex-1 py-2 text-center ${
+              activeTab === "upload"
+                ? "border-b-2 border-blue-600 font-semibold"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("upload")}
+          >
+            이미지 업로드
+          </button>
+        </div>
+
+        {/* 탭 내용 */}
+        {activeTab === "url" && (
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">
+              섬네일 URL
+            </label>
+            <input
+              type="text"
+              placeholder="https://example.com/image.jpg"
+              //{...register("thumbnailUrl")}
+              className="w-full rounded border px-3 py-2"
+            />
+            {/* {thumbnailUrl && (
+              <img
+                src={thumbnailUrl}
+                alt="Thumbnail Preview"
+                className="mt-2 w-40 h-40 object-cover rounded"
+              />
+            )} */}
+          </div>
+        )}
+
+        {activeTab === "upload" && (
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">
+              이미지 업로드
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              //onChange={handleFileChange}
+              className="w-full"
+            />
+            {/* {uploadedUrl && (
+              <img
+                src={uploadedUrl}
+                alt="Uploaded Thumbnail Preview"
+                className="mt-2 w-40 h-40 object-cover rounded"
+              />
+            )} */}
+          </div>
+        )}
 
         <div>
           <label
