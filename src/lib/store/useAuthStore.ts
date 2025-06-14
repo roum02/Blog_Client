@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type MemberType = "ADMMIN" | "GUEST" | "NONE";
+type MemberType = "ADMIN" | "GUEST" | "NONE";
 
 interface UserType {
   memberType: MemberType;

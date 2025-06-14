@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useAuthStore } from "@/lib/store/useAuthStore";
+
+const authStore = useAuthStore.getState();
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -24,23 +27,24 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // accessToken 만료로 401 Unauthorized 발생했을 때
-    // if (error.response?.status === 401 && !originalRequest._retry) {
-    //   originalRequest._retry = true;
-    //   try {
-    //     // refresh 요청 보내서 새로운 accessToken 받아오기
-    //     await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
-    //       withCredentials: true,
-    //     });
+    // accessToken 만료로 401(인증 실패/토큰 만료) Unauthorized 발생했을 때
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        // refresh 요청 보내서 새로운 accessToken 받아오기
+        await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
+          withCredentials: true,
+        });
 
-    //     // 새 토큰으로 다시 원래 요청 재시도
-    //     return instance(originalRequest);
-    //   } catch (refreshError) {
-    //     // refresh 실패 시 (로그인 만료)
-    //     window.location.href = "/login";
-    //     return Promise.reject(refreshError);
-    //   }
-    // }
+        // 새 토큰으로 다시 원래 요청 재시도
+        return instance(originalRequest);
+      } catch (refreshError) {
+        // refresh 실패 시 (로그인 만료)
+        authStore.clearAuth();
+        window.location.href = "/login";
+        return Promise.reject(refreshError);
+      }
+    }
 
     return Promise.reject(error);
   }

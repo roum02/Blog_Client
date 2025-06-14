@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Post } from "@blog-client-query";
+import { prefetchPosts, usePosts } from "@blog-client-query";
 
 interface PostsPageProps {
   searchParams: Promise<{ category?: string }>;
@@ -19,10 +20,9 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
   // TODO fetch query 로 변경
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`);
+  //const { data: posts } = prefetchPosts();
 
-  console.log(res);
-
-  if (!res.ok) {
+  if (!res) {
     return notFound();
   }
 
@@ -34,7 +34,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
         {CATEGORY_TITLE[category]} 게시글
       </h1>
       <ul className="space-y-2">
-        {posts.map((post: Post) => (
+        {posts.posts.map((post: Post) => (
           <li key={post.id}>
             <Link
               href={

@@ -13,19 +13,6 @@ export default function LoginPage() {
   const router = useRouter();
   const { clearAuth } = useAuthStore();
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(`/auth/logout`, {}, { withCredentials: true });
-      clearAuth();
-      alert("로그아웃 완료");
-    } catch (error: any) {
-      alert(
-        `로그아웃 실패: ${error?.response?.data?.message || error.message}`
-      );
-    }
-    router.push("/");
-  };
-
   return (
     <>
       <a href={kakaoAuthUrl}>
@@ -41,14 +28,6 @@ export default function LoginPage() {
           구글 로그인
         </button>
       </a>
-
-      {/* 통합 로그아웃 */}
-      <button
-        className="bg-gray-800 text-white px-4 py-2 rounded ml-2"
-        onClick={handleLogout}
-      >
-        로그아웃
-      </button>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { NavWrapper } from "@blog-client-components";
+import { NavWrapper, AuthInitializer } from "@blog-client-components";
 import { ReactQueryClientProvider } from "@blog-client-query";
 
 export const metadata: Metadata = {
@@ -18,6 +18,7 @@ export default function RootLayout({
       <body className="m-0 bg-white">
         <ReactQueryClientProvider>
           <NavWrapper>
+            <AuthInitializer />
             <main className={`pt-4 transition-all duration-300`}>
               {children}
             </main>
