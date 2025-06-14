@@ -30,6 +30,10 @@ export interface CreatePostPayload {
   isPublished: boolean;
 }
 
+export interface UploadImageResponse {
+  imageUrl: string;
+}
+
 export const getPosts = async (
   query: Record<string, string | number>
 ): Promise<PostList> => {
@@ -45,5 +49,25 @@ export const getPost = async (id: number): Promise<Post> => {
 
 export const createPost = async (payload: CreatePostPayload) => {
   const res = await axios.post("/posts", payload);
+  return res.data;
+};
+
+export const uploadImageurl = async (
+  payload: FormData
+): Promise<UploadImageResponse> => {
+  const res = await axios.post("/posts/image", payload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return res.data;
+};
+
+export const deleteImageurl = async (key: string) => {
+  // 두 번째 인자 config 객체
+  const res = await axios.delete("/posts/image", {
+    params: { key },
+  });
   return res.data;
 };

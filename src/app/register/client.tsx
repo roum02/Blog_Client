@@ -4,7 +4,7 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@blog-client-components";
-import { useCreatePost } from "@/lib/query/post/hooks";
+import { useCreatePost, useUploadImageurl } from "@/lib/query/post/hooks";
 import { getCategories, CATEGORY_QUERY_KEY } from "@blog-client-query";
 import { useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,8 +23,11 @@ const schema = yup.object({
   isPublished: yup.string().oneOf(["true", "false"]).required(),
 });
 
+const IMAGE_PRE_URL = `https://s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${process.env.NEXT_PUBLIC_AWS_S3_BUCKET}`;
+
 export default function PostRegisterClient({}) {
   const [activeTab, setActiveTab] = useState<"url" | "upload">("url");
+  const [imageUrl, setImageUrl] = useState("");
   const { data: categories = [] } = useQuery({
     queryKey: CATEGORY_QUERY_KEY,
     queryFn: getCategories,
@@ -39,7 +42,9 @@ export default function PostRegisterClient({}) {
 
   const { register, handleSubmit } = methods;
 
-  const { mutateAsync } = useCreatePost();
+  const { mutateAsync: postUploadMutation } = useCreatePost();
+  const { mutateAsync: uploadImageMutation } = useUploadImageurl();
+
   const router = useRouter();
 
   const onSubmit: SubmitHandler<RegisterInputType> = async (data) => {
@@ -49,7 +54,7 @@ export default function PostRegisterClient({}) {
     }
 
     try {
-      await mutateAsync({
+      await postUploadMutation({
         title: data.title,
         content: data.content,
         categoryId: Number(data.categoryId),
@@ -59,6 +64,23 @@ export default function PostRegisterClient({}) {
 
       alert("게시글이 성공적으로 등록되었습니다");
       router.push("/post");
+    } catch (error) {
+      alert(`${error} 등록에 실패했습니다.`);
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+    const file = e.target.files[0];
+
+    // 이미지(파일)를 서버에 보낼 때는 multipart/form-data 형식으로 전송
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const imgUrlData = await uploadImageMutation(formData);
+      setImageUrl(imgUrlData.imageUrl);
+      alert("이미지가 성공적으로 등록되었습니다.");
     } catch (error) {
       alert(`${error} 등록에 실패했습니다.`);
     }
@@ -186,16 +208,16 @@ export default function PostRegisterClient({}) {
             <input
               type="file"
               accept="image/*"
-              //onChange={handleFileChange}
+              onChange={handleFileChange}
               className="w-full"
             />
-            {/* {uploadedUrl && (
+            {imageUrl && (
               <img
-                src={uploadedUrl}
+                src={`${IMAGE_PRE_URL}/${imageUrl}`}
                 alt="Uploaded Thumbnail Preview"
                 className="mt-2 w-40 h-40 object-cover rounded"
               />
-            )} */}
+            )}
           </div>
         )}
 

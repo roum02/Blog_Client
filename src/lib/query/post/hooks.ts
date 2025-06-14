@@ -11,6 +11,8 @@ import {
   CreatePostPayload,
   createPost,
   PostList,
+  uploadImageurl,
+  deleteImageurl,
 } from "./api";
 
 export const POSTS_QUERY_KEY = ["POSTS"] as const;
@@ -70,3 +72,15 @@ export const useCreatePost = () => {
     mutationFn: (payload: CreatePostPayload) => createPost(payload),
   });
 };
+
+export const useUploadImageurl = () => {
+  return useMutation({
+    mutationFn: (payload: FormData) => uploadImageurl(payload),
+  });
+};
+
+export function useDeleteImage() {
+  return useMutation({
+    mutationFn: (key: string) => deleteImageurl(key),
+  });
+}
