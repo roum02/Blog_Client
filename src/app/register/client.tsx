@@ -60,6 +60,7 @@ export default function PostRegisterClient({}) {
         categoryId: Number(data.categoryId),
         authorId: 1,
         isPublished: data.isPublished === "true",
+        thumbnailUrl: `${IMAGE_PRE_URL}/${imageUrl}`,
       });
 
       alert("게시글이 성공적으로 등록되었습니다");
@@ -70,7 +71,9 @@ export default function PostRegisterClient({}) {
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.[0]) return;
+    if (!e.target.files?.[0]) {
+      return;
+    }
     const file = e.target.files[0];
 
     // 이미지(파일)를 서버에 보낼 때는 multipart/form-data 형식으로 전송

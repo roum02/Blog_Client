@@ -20,6 +20,7 @@ export interface Post {
     name: string;
     description?: string;
   };
+  thumbnailUrl?: string;
 }
 
 export interface CreatePostPayload {
@@ -28,6 +29,7 @@ export interface CreatePostPayload {
   categoryId: number;
   authorId: number;
   isPublished: boolean;
+  thumbnailUrl?: string;
 }
 
 export interface UploadImageResponse {

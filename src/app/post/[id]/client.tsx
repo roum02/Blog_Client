@@ -27,10 +27,13 @@ export default function PostDetailPageClient({ postId }: { postId: number }) {
       <h1 className="text-2xl font-bold">{post.title}</h1>
       <p className="text-gray-500 text-sm">
         작성일:{" "}
-        {dayjs(post.updatedAt).tz("Asia/Seoul").format("YYYY.MM.DD A hh:mm")} |
+        {/* {dayjs(post.updatedAt).tz("Asia/Seoul").format("YYYY.MM.DD A hh:mm")} | */}
+        {post.updatedAt}
         카테고리: {post.category.name}
       </p>
       {/* TODO sanitizeHtml 추가 */}
+      {post?.thumbnailUrl && <img src={post?.thumbnailUrl} />}
+
       <div
         className="mt-4 prose"
         dangerouslySetInnerHTML={{ __html: post.content }}
