@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Post } from "@blog-client-query";
 import Link from "next/link";
+import dayjs from "@/lib/dayjs";
 
 const PostSwiper = ({
   posts,
@@ -62,7 +63,9 @@ function PostCard({ post }: { post: Post }) {
         <p className="text-gray-700 mb-3 flex-grow">
           {post.category.description}
         </p>
-        <time className="text-sm text-gray-400">{post.updatedAt}</time>
+        <time className="text-sm text-gray-400">
+          {dayjs(post.updatedAt).tz("Asia/Seoul").format("YYYY.MM.DD")}
+        </time>
       </article>
     </Link>
   );
