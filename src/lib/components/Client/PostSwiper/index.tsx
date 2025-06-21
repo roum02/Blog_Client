@@ -49,12 +49,14 @@ function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/post/${post.id}`}>
       <article className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKH22KNrTddpUPQi_9whU_jmV2cuqLbXbdIQ&s"
-          alt={`${post.title} 썸네일`}
-          className="w-full h-40 object-cover rounded-md mb-4"
-          loading="lazy"
-        />
+        {post?.thumbnailUrl && (
+          <img
+            src={post.thumbnailUrl}
+            alt={`${post.title} 썸네일`}
+            className="w-full h-40 object-cover rounded-md mb-4"
+            loading="lazy"
+          />
+        )}
 
         <h3 className="text-lg font-bold mb-2">{post.title}</h3>
         <p className="text-gray-700 mb-3 flex-grow">

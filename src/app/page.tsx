@@ -12,6 +12,8 @@ const bannerData = {
 export default async function Home() {
   const popularPosts = await prefetchPosts({ limit: 4 });
 
+  console.log(popularPosts);
+
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <ImageBanner {...bannerData} />
