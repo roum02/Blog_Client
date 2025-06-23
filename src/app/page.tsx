@@ -10,7 +10,7 @@ const bannerData = {
 };
 
 export default async function Home() {
-  const popularPosts = await prefetchPosts({ limit: 4 });
+  const popularPosts = await prefetchPosts({ sortBy: "views", limit: 4 });
 
   return (
     <div className="p-4 max-w-5xl mx-auto">

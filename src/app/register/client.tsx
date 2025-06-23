@@ -10,10 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// interface PostRegisterClientProps {
-//   categories: { id: number; name: string }[];
-// }
-
 type RegisterInputType = yup.InferType<typeof schema>;
 
 const schema = yup.object({
@@ -21,6 +17,7 @@ const schema = yup.object({
   categoryId: yup.number().required(),
   content: yup.string().required(),
   isPublished: yup.string().oneOf(["true", "false"]).required(),
+  thumbnailUrl: yup.string().optional(),
 });
 
 const IMAGE_PRE_URL = `https://s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${process.env.NEXT_PUBLIC_AWS_S3_BUCKET}`;
@@ -33,8 +30,9 @@ export default function PostRegisterClient({}) {
     queryFn: getCategories,
   });
 
+  // TODO: yupResolver 확인
   const methods = useForm<RegisterInputType>({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
     defaultValues: {
       isPublished: "true",
     },
@@ -42,12 +40,18 @@ export default function PostRegisterClient({}) {
 
   const { register, handleSubmit } = methods;
 
-  const { mutateAsync: postUploadMutation } = useCreatePost();
-  const { mutateAsync: uploadImageMutation } = useUploadImageurl();
+  const { mutateAsync: postUploadMutation, isPending: isPostUploading } =
+    useCreatePost();
+  const { mutateAsync: uploadImageMutation, isPending: isImageUploading } =
+    useUploadImageurl();
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<RegisterInputType> = async (data) => {
+    if (isPostUploading) {
+      return;
+    }
+
     if (!data.title || !data.categoryId || !data.content) {
       alert("모든 항목을 입력해주세요.");
       return;
@@ -60,6 +64,9 @@ export default function PostRegisterClient({}) {
         categoryId: Number(data.categoryId),
         authorId: 1,
         isPublished: data.isPublished === "true",
+        thumbnailUrl: data?.thumbnailUrl
+          ? data.thumbnailUrl
+          : `${IMAGE_PRE_URL}/${imageUrl}`,
       });
 
       alert("게시글이 성공적으로 등록되었습니다");
@@ -70,7 +77,9 @@ export default function PostRegisterClient({}) {
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.[0]) return;
+    if (!e.target.files?.[0]) {
+      return;
+    }
     const file = e.target.files[0];
 
     // 이미지(파일)를 서버에 보낼 때는 multipart/form-data 형식으로 전송
@@ -187,16 +196,16 @@ export default function PostRegisterClient({}) {
             <input
               type="text"
               placeholder="https://example.com/image.jpg"
-              //{...register("thumbnailUrl")}
+              {...register("thumbnailUrl")}
               className="w-full rounded border px-3 py-2"
             />
-            {/* {thumbnailUrl && (
+            {imageUrl && (
               <img
-                src={thumbnailUrl}
+                src={imageUrl}
                 alt="Thumbnail Preview"
                 className="mt-2 w-40 h-40 object-cover rounded"
               />
-            )} */}
+            )}
           </div>
         )}
 
@@ -209,8 +218,14 @@ export default function PostRegisterClient({}) {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
+              disabled={isImageUploading}
               className="w-full"
             />
+            {isImageUploading && (
+              <div className="mt-2 text-sm text-blue-600">
+                이미지 업로드 중...
+              </div>
+            )}
             {imageUrl && (
               <img
                 src={`${IMAGE_PRE_URL}/${imageUrl}`}
@@ -234,9 +249,14 @@ export default function PostRegisterClient({}) {
         <div className="text-right">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            disabled={isPostUploading}
+            className={`px-4 py-2 rounded transition ${
+              isPostUploading
+                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700"
+            }`}
           >
-            등록
+            {isPostUploading ? "등록 중..." : "등록"}
           </button>
         </div>
       </form>
