@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Post, usePosts } from "@blog-client-query";
 
 const LIMIT_SIZE = 6;
@@ -38,28 +38,38 @@ function PostListWithMoreButton() {
 export default PostListWithMoreButton;
 
 function PostCard({ post }: { post: Post }) {
-  return (
-    <article className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col">
-      {/* {post.thumbnail && (
-        <img
-          src={post.thumbnail}
-          alt={`${post.title} 썸네일`}
-          className="w-full h-40 object-cover"
-          loading="lazy"
-        />
-      )} */}
+  const ref = useRef<HTMLDivElement>(null);
 
-      <div className="p-4 flex flex-col flex-grow">
-        <span className="inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded mb-2 w-max select-none">
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.innerHTML = post.content;
+    }
+  }, [post.content]);
+
+  return (
+    <article
+      className="relative rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-lg transition-shadow group"
+      style={{
+        backgroundImage: `url(${post?.thumbnailUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "250px",
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
+      <div className="absolute inset-0 z-20 flex flex-col justify-end p-4 text-white">
+        <span className="inline-block bg-green-200 text-green-900 text-xs px-2 py-1 rounded mb-2 w-max select-none">
           {post.category.name}
         </span>
-        <h3 className="text-gray-200 font-semibold text-lg leading-snug mb-2 line-clamp-2">
-          🎨 {post.title}
+
+        <h3 className="text-white font-semibold text-lg leading-snug mb-1 line-clamp-2">
+          {post.title}
         </h3>
-        <p className="text-gray-200 text-sm flex-grow line-clamp-3">
-          {post.category.description}
-        </p>
-        <time className="text-gray-400 text-xs mt-3">{post.updatedAt}</time>
+        <div
+          ref={ref}
+          className="text-gray-200 text-sm flex-grow line-clamp-1 overflow-hidden"
+        />
+        <time className="text-xs text-white/60 mt-2">{post.updatedAt}</time>
       </div>
     </article>
   );
