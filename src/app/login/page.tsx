@@ -1,7 +1,4 @@
 "use client";
-import { useAuthStore } from "@/lib/store/useAuthStore";
-import axios from "@/lib/axios/instance";
-import { useRouter } from "next/navigation";
 
 const REDIRECT_URI = "https://localhost:3000/login/kakao-callback";
 
@@ -10,9 +7,6 @@ const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${
 }&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code`;
 
 export default function LoginPage() {
-  const router = useRouter();
-  const { clearAuth } = useAuthStore();
-
   return (
     <>
       <a href={kakaoAuthUrl}>

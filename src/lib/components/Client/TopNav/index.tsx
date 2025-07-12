@@ -18,10 +18,12 @@ export default function TopNav({ onToggleSidebar }: TopNavProps) {
       await axios.post(`/auth/logout`, {}, { withCredentials: true });
       clearAuth();
       alert("로그아웃 완료");
-    } catch (error: any) {
-      alert(
-        `로그아웃 실패: ${error?.response?.data?.message || error.message}`
-      );
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "알 수 없는 오류가 발생했습니다.";
+      alert(`로그아웃 실패: ${errorMessage}`);
     }
     router.push("/");
   };

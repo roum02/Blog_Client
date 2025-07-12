@@ -27,8 +27,8 @@ export const prefetchPosts = async (
   await queryClient.prefetchQuery({
     queryKey: [...POSTS_QUERY_KEY, query],
     queryFn: ({ queryKey }) => {
-      const [_, query] = queryKey;
-      return getPosts(query);
+      const [, queryParam] = queryKey;
+      return getPosts(queryParam);
     },
   });
 
@@ -45,8 +45,8 @@ export const usePosts = (
   return useQuery<PostList, Error, PostList, readonly [string, typeof query]>({
     queryKey: [...POSTS_QUERY_KEY, query],
     queryFn: ({ queryKey }) => {
-      const [_, query] = queryKey;
-      return getPosts(query);
+      const [, queryParam] = queryKey;
+      return getPosts(queryParam);
     },
     ...options,
   });
