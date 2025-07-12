@@ -17,7 +17,7 @@ function PostListWithMoreButton() {
     <>
       <div className="grid grid-cols-2 gap-4">
         {posts?.posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <ThumbnailCard key={post.id} post={post} />
         ))}
       </div>
       {(posts?.totalCount || 0) > initLimitRow && (
@@ -37,7 +37,7 @@ function PostListWithMoreButton() {
 
 export default PostListWithMoreButton;
 
-function PostCard({ post }: { post: Post }) {
+function ThumbnailCard({ post }: { post: Post }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
