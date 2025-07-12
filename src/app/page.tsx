@@ -1,5 +1,4 @@
 import { PostSwiper, PostListWithMoreButton } from "@/lib/components/Client";
-import { QueryClient } from "@tanstack/react-query";
 import { prefetchPosts } from "@blog-client-query";
 
 const bannerData = {

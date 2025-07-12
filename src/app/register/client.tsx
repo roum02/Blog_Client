@@ -7,18 +7,14 @@ import { Textarea } from "@blog-client-components";
 import { useCreatePost, useUploadImageurl } from "@/lib/query/post/hooks";
 import { getCategories, CATEGORY_QUERY_KEY } from "@blog-client-query";
 import { useQuery } from "@tanstack/react-query";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
-type RegisterInputType = yup.InferType<typeof schema>;
-
-const schema = yup.object({
-  title: yup.string().required(),
-  categoryId: yup.number().required(),
-  content: yup.string().required(),
-  isPublished: yup.string().oneOf(["true", "false"]).required(),
-  thumbnailUrl: yup.string().optional(),
-});
+type RegisterInputType = {
+  title: string;
+  categoryId: number;
+  content: string;
+  isPublished: "true" | "false";
+  thumbnailUrl?: string;
+};
 
 const IMAGE_PRE_URL = `https://s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${process.env.NEXT_PUBLIC_AWS_S3_BUCKET}`;
 
@@ -30,9 +26,7 @@ export default function PostRegisterClient({}) {
     queryFn: getCategories,
   });
 
-  // TODO: yupResolver 확인
   const methods = useForm<RegisterInputType>({
-    // resolver: yupResolver(schema),
     defaultValues: {
       isPublished: "true",
     },
@@ -199,13 +193,6 @@ export default function PostRegisterClient({}) {
               {...register("thumbnailUrl")}
               className="w-full rounded border px-3 py-2"
             />
-            {imageUrl && (
-              <img
-                src={imageUrl}
-                alt="Thumbnail Preview"
-                className="mt-2 w-40 h-40 object-cover rounded"
-              />
-            )}
           </div>
         )}
 
@@ -218,47 +205,32 @@ export default function PostRegisterClient({}) {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              disabled={isImageUploading}
-              className="w-full"
+              className="w-full rounded border px-3 py-2"
             />
-            {isImageUploading && (
-              <div className="mt-2 text-sm text-blue-600">
-                이미지 업로드 중...
-              </div>
-            )}
             {imageUrl && (
               <img
                 src={`${IMAGE_PRE_URL}/${imageUrl}`}
-                alt="Uploaded Thumbnail Preview"
-                className="mt-2 w-40 h-40 object-cover rounded"
+                alt="업로드된 이미지"
+                className="mt-2 max-w-full h-auto rounded"
               />
             )}
           </div>
         )}
 
         <div>
-          <label
-            htmlFor="content"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             내용
           </label>
           <Textarea />
         </div>
 
-        <div className="text-right">
-          <button
-            type="submit"
-            disabled={isPostUploading}
-            className={`px-4 py-2 rounded transition ${
-              isPostUploading
-                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-            }`}
-          >
-            {isPostUploading ? "등록 중..." : "등록"}
-          </button>
-        </div>
+        <button
+          type="submit"
+          disabled={isPostUploading || isImageUploading}
+          className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+        >
+          {isPostUploading ? "등록 중..." : "등록"}
+        </button>
       </form>
     </FormProvider>
   );

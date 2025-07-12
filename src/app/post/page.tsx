@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Post } from "@blog-client-query";
-import { prefetchPosts, usePosts } from "@blog-client-query";
 
 interface PostsPageProps {
   searchParams: Promise<{ category?: string }>;
